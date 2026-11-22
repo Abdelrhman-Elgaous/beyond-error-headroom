@@ -1,5 +1,9 @@
 # EXP-1 — run order
 
+> Section numbers (§) below refer to `EXP1_PROTOCOL.md`, the study's working
+> protocol for this contrast, which is not part of this release. Its criteria,
+> bound and stop rule are stated in the paper's Methods.
+
 Every step refers to a section of `EXP1_PROTOCOL.md`. Do not reorder them: the
 reproduction control exists so that EXP-1 measures the loss and not the
 environment.

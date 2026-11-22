@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+message: "If you use this code or these tables, please cite the article below."
+title: "Beyond Error Headroom: analysis code, frozen protocol and per-case tables"
+type: software
+license: Apache-2.0
+repository-code: "https://github.com/Abdelrhman-Elgaous/beyond-error-headroom"
+authors:
+  - family-names: El-Gaghous
+    given-names: Abdelrahman
+    orcid: "https://orcid.org/0009-0002-7943-9309"
+    affiliation: "Faculty of Engineering, Mansoura University"
+  - family-names: Saraya
+    given-names: Mohamed Sabry
+    orcid: "https://orcid.org/0000-0001-5682-8243"
+    affiliation: "Faculty of Engineering, Mansoura University"
+  - family-names: Ayyad
+    given-names: Sarah M.
+    orcid: "https://orcid.org/0000-0001-8356-1644"
+    affiliation: "Faculty of Engineering, Mansoura University"
+keywords:
+  - brain metastases
+  - lesion-wise evaluation
+  - post-processing
+  - segmentation
+  - BraTS-METS
+preferred-citation:
+  type: article
+  title: "Beyond Error Headroom: The Limits of Post-Processing in Lesion-Level Brain Metastasis Segmentation"
+  authors:
+    - family-names: El-Gaghous
+      given-names: Abdelrahman
+    - family-names: Saraya
+      given-names: Mohamed Sabry
+    - family-names: Ayyad
+      given-names: Sarah M.
+  year: 2026
+  notes: "Manuscript under review"
