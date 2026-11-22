@@ -21,7 +21,7 @@ the protocol, then date and sign it.
 Run nnU-Net preprocessing first, then attach the weight channel **in
 nnU-Net's own space**:
 
-    python exp1.py weights-pp --preproc $nnUNet_preprocessed/DatasetXXX/nnUNetPlans_3d_fullres
+    python exp1.py weights-pp --preproc $nnUNet_preprocessed/Dataset137_BraTS2026MET/nnUNetResEncUNetLPlans_3d_fullres
 
 This labels the already-cropped, already-resampled segmentation, computes each
 lesion's physical volume from the preprocessed spacing in the companion .pkl,
