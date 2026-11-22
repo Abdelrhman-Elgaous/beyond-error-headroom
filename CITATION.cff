@@ -10,7 +10,7 @@ authors:
     orcid: "https://orcid.org/0009-0002-7943-9309"
     affiliation: "Faculty of Engineering, Mansoura University"
   - family-names: Saraya
-    given-names: Mohamed Sabry
+    given-names: M. S.
     orcid: "https://orcid.org/0000-0001-5682-8243"
     affiliation: "Faculty of Engineering, Mansoura University"
   - family-names: Ayyad
@@ -30,7 +30,7 @@ preferred-citation:
     - family-names: El-Gaghous
       given-names: Abdelrahman
     - family-names: Saraya
-      given-names: Mohamed Sabry
+      given-names: M. S.
     - family-names: Ayyad
       given-names: Sarah M.
   year: 2026

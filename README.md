@@ -205,7 +205,7 @@ GitHub's *Cite this repository* button reads `CITATION.cff`.
 @article{elgaghous2026headroom,
   title   = {Beyond Error Headroom: The Limits of Post-Processing in
              Lesion-Level Brain Metastasis Segmentation},
-  author  = {El-Gaghous, Abdelrahman and Saraya, Mohamed Sabry
+  author  = {El-Gaghous, Abdelrahman and Saraya, M. S.
              and Ayyad, Sarah M.},
   note    = {Manuscript under review},
   year    = {2026}
