@@ -1,5 +1,6 @@
 \begin{figure}[!tp]
 \centering
+\resizebox{\linewidth}{!}{%
 \begin{tikzpicture}[x=1mm,y=1mm,ink,line width=0.3pt,
   font=\rmfamily\fontsize{7.2}{8.6}\selectfont,
   pstep/.style = {draw=accentblue,line width=0.4pt,fill=white,
@@ -168,7 +169,8 @@
           fit=(p\g)(tg\g)(bg\g)] {};}
 \end{scope}
 
-\end{tikzpicture}
+\end{tikzpicture}%
+}
 \caption{The feasibility assessment. Left: the procedure. Right: what each
 step returned here, and which branch was taken.}
 \label{fig:framework}
