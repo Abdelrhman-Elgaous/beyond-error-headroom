@@ -1,0 +1,175 @@
+\begin{figure}[!tp]
+\centering
+\begin{tikzpicture}[x=1mm,y=1mm,ink,line width=0.3pt,
+  font=\rmfamily\fontsize{7.2}{8.6}\selectfont,
+  pstep/.style = {draw=accentblue,line width=0.4pt,fill=white,
+                  anchor=north west,align=left,inner sep=1.7mm,text width=78mm},
+  gate/.style  = {draw=ochre,line width=0.4pt,fill=paleochre,
+                  anchor=north west,align=left,inner sep=1.5mm,text width=64.4mm,
+                  font=\rmfamily\fontsize{6.6}{7.9}\selectfont},
+  note/.style  = {anchor=north west,align=left,inner sep=0pt,text width=54mm,
+                  font=\rmfamily\fontsize{6.8}{8.2}\selectfont},
+  spine/.style = {accentblue,line width=0.45pt},
+  head/.style  = {-{Stealth[length=1.7mm,width=1.4mm]}},
+  num/.style   = {anchor=east,font=\rmfamily\fontsize{8.6}{9}\bfseries\selectfont,
+                  accentblue},
+  gnote/.style = {anchor=west,align=left,inner sep=0pt,text width=54mm,
+                  font=\rmfamily\fontsize{6.6}{7.9}\selectfont,ochre},
+  tag/.style   = {anchor=west,font=\rmfamily\fontsize{6.4}{7.4}\selectfont,
+                  accentblue,inner sep=0.4mm,fill=white}]
+
+\def\SP{12}    % x of the vertical spine
+\coordinate (SPc) at (\SP,0);
+\def\BX{5}     % x of the left edge of the step boxes
+\def\GX{19}    % x of the left edge of the indented gate boxes
+\def\RX{94.2}  % x of the right-hand column
+\def\RXa{91.4}\def\RXb{151.0}
+
+%% ===========================================================================
+%%  LEFT COLUMN -- the procedure
+%% ===========================================================================
+\node[pstep] (s1) at (\BX,0) {%
+  \textbf{Count the baseline errors.}\\[0.7mm]
+  Matched lesions $S$, reference lesions $N_{\mathrm{gt}}$, false-positive
+  components $N_{\mathrm{fp}}$, missed lesions $N_{\mathrm{fn}}$, per region.};
+
+\node[pstep,below=4.5mm of s1.south west,anchor=north west] (s2) {%
+  \textbf{Bound what any method of that class could achieve.}\\[1.1mm]
+  $\displaystyle
+   H_{\mathrm{FP}}=\frac{S}{N_{\mathrm{gt}}}-\frac{S}{N_{\mathrm{gt}}+N_{\mathrm{fp}}}
+   \qquad
+   H_{\mathrm{FN}}=\frac{N_{\mathrm{fn}}}{N_{\mathrm{gt}}+N_{\mathrm{fp}}}$
+  \\[1.1mm]
+  Equations~\eqref{eq:fp_ceiling} and~\eqref{eq:fn_ceiling}. Both follow from the counts alone, so both are
+  available before a method exists.};
+
+\node[pstep,below=4.5mm of s2.south west,anchor=north west] (s3) {%
+  \textbf{Divide the bound by the noise floor.}\\[0.7mm]
+  Compare $H$ with the minimum detectable effect the design can resolve. A
+  ceiling below the MDE cannot be demonstrated whatever the method.};
+
+\node[gate,below=3.4mm of s3.south west,anchor=north west,xshift=14mm] (g3) {%
+  \textbf{\textit{H} < MDE}\,---\,stop. No intervention of this class can
+  produce a detectable change on this sample.};
+
+\node[pstep,below=4.5mm of g3.south west,anchor=north west,xshift=-14mm] (s4) {%
+  \textbf{Test whether the counted errors are available to act on.}\\[0.7mm]
+  Sweep the proposal threshold and measure what fraction of them surfaces at
+  all. A bound counts errors; it does not ask whether the model emits anything
+  a rule could reach.};
+
+\node[gate,below=3.4mm of s4.south west,anchor=north west,xshift=14mm] (g4) {%
+  \textbf{Not available}\,---\,the bound is nominal. Intervene earlier, at
+  training or architecture, not after the fact.};
+
+\node[pstep,below=4.5mm of g4.south west,anchor=north west,xshift=-14mm] (s5) {%
+  \textbf{Build the rule, and report the evaluable population per arm.}\\[0.7mm]
+  An intervention that can empty a prediction changes $E_A\cap E_B$,
+  Equation~\eqref{eq:eligible}, so a nominally paired comparison need not rest on one
+  population.};
+
+%% ---------------- the spine ------------------------------------------------
+%% straight runs, 1 -> 2 -> 3
+\draw[spine,head] (s1.south -| SPc) -- ($(s2.north -| SPc)+(0,0.2)$);
+\draw[spine,head] (s2.south -| SPc) -- ($(s3.north -| SPc)+(0,0.2)$);
+%% 3 -> 4, continuous, with the gate as an off-ramp
+\draw[spine] (s3.south -| SPc) -- (s4.north -| SPc);
+\draw[spine,head] ($(g3.west)-(7,0)$) -- ($(g3.west)-(0.6,0)$);
+%% 4 -> 5, same
+\draw[spine] (s4.south -| SPc) -- (s5.north -| SPc);
+\draw[spine,head] ($(g4.west)-(7,0)$) -- ($(g4.west)-(0.6,0)$);
+%% arrowheads entering steps 4 and 5
+\draw[spine,head] ($(s4.north -| SPc)+(0,2.6)$) -- ($(s4.north -| SPc)+(0,0.2)$);
+\draw[spine,head] ($(s5.north -| SPc)+(0,2.6)$) -- ($(s5.north -| SPc)+(0,0.2)$);
+
+%% branch labels, on the spine, masked against the line
+\node[tag] at ($(g3.south -| SPc)!0.5!(s4.north -| SPc)+(0.9,0)$) {$H\ge$ MDE};
+\node[tag] at ($(g4.south -| SPc)!0.5!(s5.north -| SPc)+(0.9,0)$) {available};
+
+%% step numbers
+\foreach \n/\s in {1/s1,2/s2,3/s3,4/s4,5/s5}{
+  \node[num] at ($(\s.north west)+(-1.6,-2.4)$) {\n};}
+
+%% ===========================================================================
+%%  RIGHT COLUMN -- what this study found, aligned to each step
+%% ===========================================================================
+\foreach \k in {1,2,3,4,5}{
+  \coordinate (c\k) at ($(s\k.north)!0.5!(s\k.south)$);
+  \coordinate (t\k) at (\RX,0 |- s\k.north);
+  \coordinate (b\k) at (\RX,0 |- s\k.south);}
+\foreach \g in {3,4}{
+  \coordinate (cg\g) at ($(g\g.north)!0.5!(g\g.south)$);
+  \coordinate (tg\g) at (\RX,0 |- g\g.north);
+  \coordinate (bg\g) at (\RX,0 |- g\g.south);}
+
+\node[note,anchor=west] (m1) at (\RX,0 |- c1) {%
+  Four evaluation regions on the 155-case least-exposed stratum; a fixed
+  lesion-wise evaluator frozen before any arm was run.};
+
+\node[note,anchor=west] (m2) at (\RX,0 |- c2) {%
+  In the tumour regions, perfect false-positive removal buys
+  \textbf{0.025--0.040} lesion-wise Dice; perfect recovery of every missed
+  lesion buys \textbf{0.20--0.21}.};
+
+\node[note,anchor=west] (m3) at (\RX,0 |- c3) {%
+  MDE $=0.019$ Dice at $n=155$.\\[0.8mm]
+  False-positive side: \textbf{1.3--2.1}\xx\ the MDE --- narrow.\\[0.8mm]
+  False-negative side: \textbf{10--11}\xx\ --- wide.\\[0.8mm]
+  {\color{rulegrey}Tumour regions; the resection cavity differs.}};
+
+\node[note,anchor=west] (m4) at (\RX,0 |- c4) {%
+  A fifteen-fold lower threshold surfaced \textbf{21.8\%} of the missed
+  lesions. \textbf{76--79\%} yield no candidate at any threshold tested, and
+  the median probability inside a missed lesion is zero.};
+
+\node[note,anchor=west] (m5) at (\RX,0 |- c5) {%
+  \textbf{20 of 24} rule--region comparisons changed their evaluable set;
+  reading the arms unpaired would have moved the apparent effect by up to
+  \textbf{0.259} in the resection cavity.};
+
+\node[gnote] (p3) at (\RX,0 |- cg3) {%
+  \textbf{Not taken.} Both ceilings cleared the MDE, so the assessment
+  continued.};
+
+\node[gnote] (p4) at (\RX,0 |- cg4) {%
+  \textbf{Taken.} Post-processing was ruled out on its own evidence, and the
+  study moved to a pre-registered training contrast.};
+
+%% ===========================================================================
+%%  HEADINGS and CLOSING BAND, placed from the finished layout
+%% ===========================================================================
+\coordinate (TOP) at ($(s1.north west)+(0,4.2)$);
+\node[anchor=base west,font=\rmfamily\fontsize{7.8}{9}\bfseries\selectfont,accentblue]
+  at ($(TOP)+(0,0.9)$) {The assessment};
+\node[anchor=base west,font=\rmfamily\fontsize{6.8}{8}\selectfont,rulegrey]
+  at ($(TOP)+(27,0.9)$) {what to compute, and in what order};
+\draw[accentblue,line width=0.5pt] ($(TOP)+(-5,0)$) -- ($(TOP)+(81.4,0)$);
+
+\node[anchor=base west,font=\rmfamily\fontsize{7.8}{9}\bfseries\selectfont,ink]
+  at ($(TOP)+(89.2,0.9)$) {This study};
+\node[anchor=base west,font=\rmfamily\fontsize{6.8}{8}\selectfont,rulegrey]
+  at ($(TOP)+(106.7,0.9)$) {BraTS-METS 2026};
+\draw[rulegrey,line width=0.5pt] ($(TOP)+(86.4,0)$) -- ($(TOP)+(146,0)$);
+
+\coordinate (BOT) at ($(s5.south west)+(0,-4.0)$);
+\draw[accentblue,line width=0.5pt] ($(BOT)+(-5,0)$) -- ($(BOT)+(146,0)$);
+\node[anchor=north west,font=\rmfamily\fontsize{7.8}{9}\bfseries\selectfont,accentblue]
+  at ($(BOT)+(-5,-0.8)$) {Actionable recovery = headroom \xx\ availability.};
+\node[anchor=north east,font=\rmfamily\fontsize{6.8}{8}\selectfont]
+  at ($(BOT)+(146,-1.0)$) {Steps~1--3 are arithmetic; step~4 is what decides.};
+
+%% ---------------- tint behind the right column -----------------------------
+\begin{scope}[on background layer]
+  \foreach \k in {1,2,3,4,5}{
+    \node[fill=panelgrey,inner xsep=2.8mm,inner ysep=0.4mm,
+          fit=(m\k)(t\k)(b\k)] {};}
+  \foreach \g in {3,4}{
+    \node[fill=paleochre,inner xsep=2.8mm,inner ysep=0.4mm,
+          fit=(p\g)(tg\g)(bg\g)] {};}
+\end{scope}
+
+\end{tikzpicture}
+\caption{The feasibility assessment. Left: the procedure. Right: what each
+step returned here, and which branch was taken.}
+\label{fig:framework}
+\end{figure}
